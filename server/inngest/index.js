@@ -92,18 +92,20 @@ const sendBookingConfirmationEmail = inngest.createFunction(
 
         await sendEmail({
             to: booking.user.email,
-            subject: `Payment Confirmation: "${booking.show.movie.title}" booked successfully!`,
-            body: ` <div style="font-family: Arial, sans-serif; line-height: 1.5;">
-                        <h2>Hi ${booking.user.name},</h2>
-                        <p>Your booking for <strong style="color: #F84565;">"${booking.show.movie.title}"</strong> is confirmed.</p>
-                        <p>
-                            <strong>Date:</strong> ${new Date(booking.show.showDateTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}<br/>
-                            <strong>Time:</strong> ${new Date(booking.show.showDateTime).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}
+            subject: `🎉 Booking Confirmed: "${booking.show.movie.title}" - See You Soon!`,
+            body: ` <div style="font-family: Arial, sans-serif; padding: 24px; background-color: #fefefe; border-radius: 10px; color: #333;">
+                        <h2 style="color: #28a745;">Hi ${booking.user.name},</h2>
+                        <p style="font-size: 16px;">
+                            Your booking for <strong style="color: #F84565;">"${booking.show.movie.title}"</strong> has been successfully confirmed! 🎟️
                         </p>
-                        <p>Enjoy the show! 🍿</p>
-                        <p>Thanks for booking with us!<br/>- QuickShow Team</p>
-                    </div>
-            `
+                        <div style="margin: 20px 0; padding: 16px; background-color: #f8f9fa; border-left: 5px solid #28a745; border-radius: 6px;">
+                            <p><strong>Date:</strong> ${new Date(booking.show.showDateTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</p>
+                            <p><strong>Time:</strong> ${new Date(booking.show.showDateTime).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}</p>
+                        </div>
+                        <p style="font-size: 15px;">We’re thrilled to have you! Get ready for an amazing movie experience. 🍿</p>
+                        <br/>
+                        <p style="font-size: 14px; color: #555;">Thanks for booking with us!<br/><strong>- QuickShow Team</strong></p>
+                    </div>`
         })
     }
 )
@@ -154,18 +156,20 @@ const sendShowReminders = inngest.createFunction(
             return await Promise.allSettled(
                 reminderTasks.map(task => sendEmail({
                     to: task.userEmail,
-                    subject: `Reminder: Your movie "${task.movieTitle}" starts soon!`,
-                    body: ` <div style="font-family: Arial, sans-serif; padding: 20px;"> I
-                                <h2>Hello ${task.userName},</h2>
-                                <p>This is a quick reminder that your movie:</p>
-                                <h3 style="color: #F84565;">"${task.movieTitle}"</h3>
-                                <p>
-                                    is scheduled for <strong>${new Date(task.showTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</strong> 
-                                    at <strong>${new Date(task.showTime).toLocaleTimeString ('en-US', { timeZone: 'Asia/Kolkata' })}</strong>.
-                                </p>
-                                <p>It starts in approximately <strong>8 hours</strong> - make sure you're ready!</p>
+                    subject: `🎬 Reminder: Your movie "${task.movieTitle}" starts soon!`,
+                    body: ` <div style="font-family: Arial, sans-serif; padding: 24px; background-color: #fffbe6; border-radius: 10px; color: #333;">
+                                <h2 style="color: #F84565;">Hey ${task.userName},</h2>
+                                <p style="font-size: 16px;">Just a reminder that your movie:</p>
+                                <div style="padding: 16px; background-color: #ffffff; border-left: 5px solid #F84565; margin: 20px 0; border-radius: 6px;">
+                                    <h3 style="margin: 0; color: #000;">🎥 <span style="color: #F84565;">"${task.movieTitle}"</span></h3>
+                                    <p style="margin: 8px 0 0; font-size: 15px;">
+                                        <strong>Date:</strong> ${new Date(task.showTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}<br/>
+                                        <strong>Time:</strong> ${new Date(task.showTime).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}
+                                    </p>
+                                </div>
+                                <p style="font-size: 15px;">Only <strong>8 hours to go</strong> – make sure your popcorn is ready! 🍿</p>
                                 <br/>
-                                <p>Enjoy the show! <br/>QuickShow Team</p>
+                                <p style="font-size: 14px; color: #555;">See you at the movies!<br/><strong>- QuickShow Team</strong></p>
                             </div>`
                 }))
             )
@@ -206,7 +210,7 @@ const sendNewShowNotifications = inngest.createFunction(
                 <h3 style="margin: 0; color: #000;">🎬 <span style="color: #F84565;">${movieTitle}</span></h3>
                 <p style="margin: 8px 0 0; font-size: 15px;">Now available for booking on <strong>QuickShow</strong>.</p>
               </div>
-              <a href="https://your-frontend-site.com" target="_blank" style="display: inline-block; margin-top: 20px; background-color: #F84565; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 5px; font-weight: bold;">
+              <a href="https://quickshow-rust.vercel.app/" target="_blank" style="display: inline-block; margin-top: 20px; background-color: #F84565; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 5px; font-weight: bold;">
                 🎟️ Book Your Seats Now
               </a>
               <p style="margin-top: 30px; font-size: 14px; color: #555;">Thank you for being part of QuickShow!<br/>— The QuickShow Team</p>
