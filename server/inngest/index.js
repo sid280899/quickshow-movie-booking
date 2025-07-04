@@ -196,14 +196,22 @@ const sendNewShowNotifications = inngest.createFunction(
             const userName = user.name;
 
             const subject = `🎬 New Show Added: ${movieTitle}`;
-            const body = `<div style="font-family: Arial, sans-serif; padding: 20px;">
-                                <h2>Hi ${userName},</h2>
-                                <p>We've just added a new show to our library:</p>
-                                <h3 style="color: #F84565;">"${movieTitle}"</h3>
-                                <p>Visit our website</p>
-                                <br/>
-                                <p>Thanks,<br/>QuickShow Team</p>
-                            </div>`
+            const body =  `
+            <div style="font-family: Arial, sans-serif; padding: 24px; background-color: #f9f9f9; border-radius: 10px; color: #333;">
+              <h2 style="color: #F84565;">🍿 Hello ${userName},</h2>
+              <p style="font-size: 16px;">
+                We're excited to announce a brand-new movie show just added to our platform!
+              </p>
+              <div style="padding: 16px; background-color: #fff; border-left: 5px solid #F84565; margin: 20px 0; border-radius: 6px;">
+                <h3 style="margin: 0; color: #000;">🎬 <span style="color: #F84565;">${movieTitle}</span></h3>
+                <p style="margin: 8px 0 0; font-size: 15px;">Now available for booking on <strong>QuickShow</strong>.</p>
+              </div>
+              <a href="https://your-frontend-site.com" target="_blank" style="display: inline-block; margin-top: 20px; background-color: #F84565; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 5px; font-weight: bold;">
+                🎟️ Book Your Seats Now
+              </a>
+              <p style="margin-top: 30px; font-size: 14px; color: #555;">Thank you for being part of QuickShow!<br/>— The QuickShow Team</p>
+            </div>
+          `
 
                             await sendEmail({
                                 to: userEmail,
